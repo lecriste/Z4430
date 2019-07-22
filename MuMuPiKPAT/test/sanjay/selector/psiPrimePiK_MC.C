@@ -2015,7 +2015,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
   //Float_t minDeltaRB0 = 10., minDeltaPtB0 = 10. ;
 
   Float_t DeltaR_1B0[2] = {99,99}, DeltaPt_1B0[2] = {99,99} ;
-  Int_t chargePi_1B0[2] = {0,0}, chargeK_1B0[2] = {0,0} ; 
+  Int_t PiChargeMatch_1B0[2] = {0,0}, KChargeMatch_1B0[2] = {0,0} ;
   Bool_t MuMuMatched_1B0[2] = {kFALSE,kFALSE}, pionMatched_1B0[2] = {kFALSE,kFALSE}, kaonMatched_1B0[2] = {kFALSE,kFALSE} ;
 
   Float_t B0Mass_1B0_hardCuts = -1;
@@ -2023,7 +2023,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
   // twin variables
   Float_t DeltaR_2B0[2][2] = {{99,99},{99,99}}, DeltaPt_2B0[2][2] = {{99,99},{99,99}}, B0VtxCL_2B0[2] = {-1,-1}, B0Mass_2B0[2][2] = { {-1,-1},{-1,-1} }, B0CTau_2B0[2][2] = { {-1,-1},{-1,-1} }, alpha_2B0[2] = {-2,-2} ;
   Double_t DrPi_2B0[2] = {99,99}, DrK_2B0[2] = {99,99} ;
-  Int_t chargePi_2B0[2][2] = { {0,0},{0,0} }, chargeK_2B0[2][2] = { {0,0},{0,0} } ;
+  Int_t PiChargeMatch_2B0[2][2] = { {0,0},{0,0} }, KChargeMatch_2B0[2][2] = { {0,0},{0,0} } ;
   Float_t B0Mass_gen = 0 ;
   TLorentzVector PsiPp4_2B0[2][2], Pip4_2B0[2][2], Kp4_2B0[2][2] ;
   TLorentzVector PsiPp4_B0constr_2B0[2][2], Pip4_B0constr_2B0[2][2], Kp4_B0constr_2B0[2][2] ;
@@ -3075,18 +3075,18 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 		      Double_t DrK = trueK4Vec[0].DeltaR(Kp4_orig) ; // DeltaR between true K and reco K
 		      Double_t kPtDiff = fabs(trueK4Vec[0].Pt() - Kp4_orig.Pt())/trueK4Vec[0].Pt() ;
 		      */
-		      chargePi_1B0[0] = truePiCharge[0] * PiCharge_2B0[0][nB0AC-1] ;
-		      chargeK_1B0[0] = trueKCharge[0] * KCharge_2B0[0][nB0AC-1] ;
+		      PiChargeMatch_1B0[0] = truePiCharge[0] * PiCharge_2B0[0][nB0AC-1] ;
+		      KChargeMatch_1B0[0] = trueKCharge[0] * KCharge_2B0[0][nB0AC-1] ;
 		      
 		      // check truth matching
 		      if ( (DrMuMu < minDeltaRMuMu) && (MuMuPtDiff < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			MuMuMatched_1B0[0] = kTRUE ;
 		      
-		      if ( chargePi_1B0[0] > 0 ) 
+		      if ( PiChargeMatch_1B0[0] > 0 )
 			if ( (DrPi < minDeltaRPi) && (piPtDiff < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			  pionMatched_1B0[0] = kTRUE ;
 		      
-		      if ( chargeK_1B0[0] > 0 ) 
+		      if ( KChargeMatch_1B0[0] > 0 )
 			if ( (DrK < minDeltaRK) && (kPtDiff < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			  kaonMatched_1B0[0] = kTRUE ;
 		      
@@ -3119,17 +3119,17 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 		      for (Int_t i = 0; i < nB0AC; i++) { 
 			DrPi_2B0[i] = truePi4Vec[0].DeltaR(Pip4_2B0[0][i]) ; // DeltaR between true psi' and reco psi'
 			DrK_2B0[i] = trueK4Vec[0].DeltaR(Kp4_2B0[0][i]) ; // DeltaR between true psi' and reco psi'
-			chargePi_2B0[0][i] = truePiCharge[0] * PiCharge_2B0[0][i] ;
-			chargeK_2B0[0][i] = trueKCharge[0] * KCharge_2B0[0][i] ;
+			PiChargeMatch_2B0[0][i] = truePiCharge[0] * PiCharge_2B0[0][i] ;
+			KChargeMatch_2B0[0][i] = trueKCharge[0] * KCharge_2B0[0][i] ;
 
 			if ( (DrMuMu_2B0[i] < minDeltaRMuMu) && (MuMuPtDiff_2B0[i] < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			  MuMuMatched[0][i] = kTRUE ;
 		      
-			if ( chargePi_2B0[0][i] > 0 ) 
+			if ( PiChargeMatch_2B0[0][i] > 0 )
 			  if ( (DrPi_2B0[i] < minDeltaRPi) && (piPtDiff_2B0[i] < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			    pionMatched[0][i] = kTRUE ;
 		      
-			if ( chargeK_2B0[0][i] > 0 ) 
+			if ( KChargeMatch_2B0[0][i] > 0 )
 			  if ( (DrK_2B0[i] < minDeltaRK) && (kPtDiff_2B0[i] < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			    kaonMatched[0][i] = kTRUE ;
 		      }
@@ -3166,10 +3166,10 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 
 			DeltaR_1B0[1] = myB0p4_orig.DeltaR(trueB04Vec[0]) ;
 			DeltaPt_1B0[1] = fabs(myB0p4_orig.Pt() - trueB04Vec[0].Pt()) / trueB04Vec[0].Pt() ;
-			chargePi_1B0[1] = truePiCharge[0] * PiCharge_2B0[1][0] ;
-			chargeK_1B0[1] = trueKCharge[0] * KCharge_2B0[1][0] ;
-			chargePi_2B0[1][0] = chargePi_1B0[1] ;
-			chargeK_2B0[1][0] = chargeK_1B0[1] ;
+			PiChargeMatch_1B0[1] = truePiCharge[0] * PiCharge_2B0[1][0] ;
+			KChargeMatch_1B0[1] = trueKCharge[0] * KCharge_2B0[1][0] ;
+			PiChargeMatch_2B0[1][0] = PiChargeMatch_1B0[1] ;
+			KChargeMatch_2B0[1][0] = KChargeMatch_1B0[1] ;
 			  
 			Double_t DrMuMu_1B0 = trueMuMu4Vec[0].DeltaR(PsiPp4_orig) ; // DeltaR between true psi' and reco psi'
 			Double_t MuMuPtDiff_1B0 = fabs(trueMuMu4Vec[0].Pt() - PsiPp4_orig.Pt())/trueMuMu4Vec[0].Pt() ;
@@ -3182,11 +3182,11 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 			if ( (DrMuMu_1B0 < minDeltaRMuMu) && (MuMuPtDiff_1B0 < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			  MuMuMatched_1B0[1] = kTRUE ;
 			  
-			if ( chargePi_1B0[1] > 0 ) 
+			if ( PiChargeMatch_1B0[1] > 0 )
 			  if ( (DrPi_1B0 < minDeltaRPi) && (piPtDiff_1B0 < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			    pionMatched_1B0[1] = kTRUE ;
 			  
-			if ( chargeK_1B0[1] > 0 ) 
+			if ( KChargeMatch_1B0[1] > 0 )
 			  if ( (DrK_1B0 < minDeltaRK) && (kPtDiff_1B0 < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			    kaonMatched_1B0[1] = kTRUE ;
 
@@ -3216,8 +3216,8 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 			DeltaPt_2B0[1][nB0ACInMC-2] = DeltaPt_1B0[1] ;
 			DeltaR_2B0[1][nB0ACInMC-1] = myB0p4_orig.DeltaR(trueB04Vec[0]) ; 
 			DeltaPt_2B0[1][nB0ACInMC-1] = fabs(myB0p4_orig.Pt() - trueB04Vec[0].Pt()) / trueB04Vec[0].Pt() ; 
-			chargePi_2B0[1][1] = truePiCharge[0] * PiCharge_2B0[1][1] ;
-			chargeK_2B0[1][1] = trueKCharge[0] * KCharge_2B0[1][1] ;
+			PiChargeMatch_2B0[1][1] = truePiCharge[0] * PiCharge_2B0[1][1] ;
+			KChargeMatch_2B0[1][1] = trueKCharge[0] * KCharge_2B0[1][1] ;
 		      
 			Double_t DrMuMu_2B0[2] = { trueMuMu4Vec[0].DeltaR(PsiPp4_2B0[1][0]), trueMuMu4Vec[0].DeltaR(PsiPp4_2B0[1][1]) } ; // DeltaR between true psi' and reco psi'
 			Double_t MuMuPtDiff_2B0[2] = { fabs(trueMuMu4Vec[0].Pt() - PsiPp4_2B0[1][0].Pt())/trueMuMu4Vec[0].Pt(), fabs(trueMuMu4Vec[0].Pt() - PsiPp4_2B0[1][1].Pt())/trueMuMu4Vec[0].Pt() } ;
@@ -3234,11 +3234,11 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 			  if ( (DrMuMu_2B0[i] < minDeltaRMuMu) && (MuMuPtDiff_2B0[i] < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			    MuMuMatched[1][i] = kTRUE ;
 			  
-			  if ( chargePi_2B0[1][i] > 0 ) 
+			  if ( PiChargeMatch_2B0[1][i] > 0 )
 			    if ( (DrPi_2B0_in[i] < minDeltaRPi) && (piPtDiff_2B0[i] < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			      pionMatched[1][i] = kTRUE ;
 			  
-			  if ( chargeK_2B0[1][i] > 0 ) 
+			  if ( KChargeMatch_2B0[1][i] > 0 )
 			    if ( (DrK_2B0_in[i] < minDeltaRK) && (kPtDiff_2B0[i] < momentumCut) ) // matching based on DeltaR and below momentumCut relative difference in pT
 			      kaonMatched[1][i] = kTRUE ;
 			  
@@ -3968,7 +3968,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 	hB0CTau_1B0matched->Fill( B0CTau_2B0[0][0] ) ; 
 
 	hMCTruthMatching_1B0[0][0]->Fill(1) ;
-	//if ( (chargePi_1B0[0] > 0) && (chargeK_1B0[0] > 0) ) {
+	//if ( (PiChargeMatch_1B0[0] > 0) && (KChargeMatch_1B0[0] > 0) ) {
 	if ( MuMuMatched_1B0[0] && pionMatched_1B0[0] && kaonMatched_1B0[0] ) {
 	//if ( pionMatched_1B0[0] && kaonMatched_1B0[0] ) {
 	  hMCTruthMatching_1B0[0][1]->Fill(1) ;
@@ -4062,7 +4062,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 	    hB0Mass_2B0notTwin_matched[0]->Fill( B0Mass_2B0[0][i] ) ; 
 	    hMCDeltaRPi_2B0->Fill( DrPi_2B0[i] );
 	    hMCDeltaRK_2B0->Fill( DrK_2B0[i] );
-	    //if ( (chargePi_2B0[0][i] > 0) && (chargeK_2B0[0][i] > 0) ) {
+	    //if ( (PiChargeMatch_2B0[0][i] > 0) && (KChargeMatch_2B0[0][i] > 0) ) {
 	    if ( MuMuMatched[0][i] && pionMatched[0][i] && kaonMatched[0][i] ) {
 	      hMCTruthMatching_2B0notTwin[1]->Fill( 2 ) ;
 	      hB0Mass_2B0notTwin_matched[1]->Fill( B0Mass_2B0[0][i] ) ; 
@@ -4076,7 +4076,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 	      hB0Mass_2B0notTwin_matched[0]->Fill( B0Mass_2B0[0][i] ) ;
 	      hMCDeltaRPi_2B0->Fill( DrPi_2B0[i] );
 	      hMCDeltaRK_2B0->Fill( DrK_2B0[i] );
-	      //if ( (chargePi_2B0[0][i] > 0) && (chargeK_2B0[0][i] > 0) ) {
+	      //if ( (PiChargeMatch_2B0[0][i] > 0) && (KChargeMatch_2B0[0][i] > 0) ) {
 	      if ( MuMuMatched[0][i] && pionMatched[0][i] && kaonMatched[0][i] ) {
 		hMCTruthMatching_2B0notTwin[1]->Fill( 1 ) ;
 		hB0Mass_2B0notTwin_matched[1]->Fill( B0Mass_2B0[0][i] ) ; 
@@ -4118,7 +4118,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 	  hMCTruthMatching_2B0twin[0]->Fill( 2 ) ;
 	  for (Int_t i=0; i<nTwins+1; i++) {
 	    hB0Mass_2B0twin_matched[0]->Fill( B0Mass_2B0[0][i] ) ;
-	    //if ( (chargePi_2B0[0][i] > 0) && (chargeK_2B0[0][i] > 0) ) {
+	    //if ( (PiChargeMatch_2B0[0][i] > 0) && (KChargeMatch_2B0[0][i] > 0) ) {
 	    if ( MuMuMatched[0][i] && pionMatched[0][i] && kaonMatched[0][i] ) {
 	      hMCTruthMatching_2B0twin[1]->Fill( 2 ) ;
 	      hB0Mass_2B0twin_matched[1]->Fill( B0Mass_2B0[0][i] ) ;
@@ -4152,7 +4152,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 	  for (Int_t i=0; i<nTwins+1; i++) 
 	    if ( (DeltaR_2B0[0][i] < minDeltaRB0) && (DeltaPt_2B0[0][i] < minDeltaPtB0) ) {
 	      hB0Mass_2B0twin_matched[0]->Fill( B0Mass_2B0[0][i] ) ; 
-	      //if ( (chargePi_2B0[0][i] > 0) && (chargeK_2B0[0][i] > 0) ) {
+	      //if ( (PiChargeMatch_2B0[0][i] > 0) && (KChargeMatch_2B0[0][i] > 0) ) {
 	      if ( MuMuMatched[0][i] && pionMatched[0][i] && kaonMatched[0][i] ) {
 		hMCTruthMatching_2B0twin[1]->Fill( 1 ) ;
 		hB0Mass_2B0twin_matched[1]->Fill( B0Mass_2B0[0][i] ) ;
@@ -4245,7 +4245,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 	hMCTruthMatching_1B0[1][0]->Fill(1) ;
 	hB0Mass_1B0matched[1][0]->Fill( B0Mass_2B0[1][0] ) ;
 
-	//if ( (chargePi_1B0[1] > 0) && (chargeK_1B0[1] > 0) ) { 
+	//if ( (PiChargeMatch_1B0[1] > 0) && (KChargeMatch_1B0[1] > 0) ) {
 	if ( MuMuMatched_1B0[1] && pionMatched_1B0[1] && kaonMatched_1B0[1] ) {
 	//if ( pionMatched_1B0[1] && kaonMatched_1B0[1] ) {
 	  hMCTruthMatching_1B0[1][1]->Fill(1) ;
