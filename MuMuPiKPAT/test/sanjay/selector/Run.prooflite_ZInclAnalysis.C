@@ -310,7 +310,7 @@
       option.Append("_"+B0massC);
 
     Long64_t nEntries = -1;
-    nEntries = 10;
+    //nEntries = 10;
     cout << "Running with option \"" << option << "\" on " << nEntries << " events" << endl;
     p->Process(dataset, selectorcplus, option, nEntries);  
     
