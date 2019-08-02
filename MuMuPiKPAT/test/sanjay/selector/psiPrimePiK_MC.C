@@ -1072,6 +1072,8 @@ void psiPrimePiK_MC::SlaveBegin(TTree * /*tree*/)
   hMCDeltaPt_1B0 = new TH1F("MCDeltaPt_1B0", "#Deltap_{T}/p_{T} for single B^{0} candidate events;|p_{T}(B^{0}_{gen}) - p_{T}(B^{0}_{reco})| / p_{T}(B^{0}_{gen})", 100, 0, 1) ;
   hMCPionMatching_1B0[0] = new TH1I("MCPionTruthMatching_1B0", "MC pion charge matching for single signal B^{0} candidate events;Pion matched;Events", 5, -2.5, 2.5) ;
   hMCKaonMatching_1B0[0] = new TH1I("MCKaonTruthMatching_1B0", "MC kaon charge matching for single signal B^{0} candidate events;Kaon matched;Events", 5, -2.5, 2.5) ;
+  hB0Mass_pionNotMatched_1B0[0] = new TH1F("B0Mass_pionNotMatched_1B0", "mass of single B^{0} candidates with mis-id pion;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_kaonNotMatched_1B0[0] = new TH1F("B0Mass_kaonNotMatched_1B0", "mass of single B^{0} candidates with mis-id kaon;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   hMCTruthMatching_1B0[0][0] = new TH1I("MCTruthMatching_1B0", "MC matching for single B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[0][1] = new TH1I("MCTruthMatching_1B0_dauCh", "MC matching (with daughters charge) for single B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[0][2] = new TH1I("MCTruthMatching_1B0fromDau", "MC truth daughters matching for single B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
@@ -1134,6 +1136,8 @@ void psiPrimePiK_MC::SlaveBegin(TTree * /*tree*/)
   //
   hMCPionMatching_1B0[1] = new TH1I("MCPionTruthMatching_1B0signalWin", "MC pion charge matching for single signal B^{0} candidate events;Pion matched;Events", 5, -2.5, 2.5) ;
   hMCKaonMatching_1B0[1] = new TH1I("MCKaonTruthMatching_1B0signalWin", "MC kaon charge matching for single signal B^{0} candidate events;Kaon matched;Events", 5, -2.5, 2.5) ;
+  hB0Mass_pionNotMatched_1B0[1] = new TH1F("B0Mass_pionNotMatched_1B0signalWin", "mass of single B^{0} candidates with mis-id pion;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_kaonNotMatched_1B0[1] = new TH1F("B0Mass_kaonNotMatched_1B0signalWin", "mass of single B^{0} candidates with mis-id kaon;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   hMCTruthMatching_1B0[1][0] = new TH1I("MCTruthMatching_1B0signalWin", "MC matching for single signal B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[1][1] = new TH1I("MCTruthMatching_1B0signalWin_dauCh", "MC matching (with daughters charge) for single signal B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[1][2] = new TH1I("MCTruthMatching_1B0signalWin_fromDau", "MC truth daughters matching for single signal B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
@@ -3973,7 +3977,11 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 
     if ( MC ) {
       hMCPionMatching_1B0[0]->Fill(PiChargeMatch_1B0[0]) ;
+      if (PiChargeMatch_1B0[0] < 0)
+        hB0Mass_pionNotMatched_1B0[0]->Fill(B0Mass_2B0[0][0]);
       hMCKaonMatching_1B0[0]->Fill(KChargeMatch_1B0[0]) ;
+      if (KChargeMatch_1B0[0] < 0)
+        hB0Mass_kaonNotMatched_1B0[0]->Fill(B0Mass_2B0[0][0]);
 
       if ( (DeltaR_1B0[0] < minDeltaRB0) && (DeltaPt_1B0[0] < minDeltaPtB0) ) {
 	hB0Mass_1B0matched[0][0]->Fill( B0Mass_2B0[0][0] ) ;
@@ -4254,7 +4262,12 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
       hMCDeltaPt_1B0->Fill( DeltaPt_1B0[1] ) ;
 
       hMCPionMatching_1B0[1]->Fill(PiChargeMatch_1B0[1]) ;
+      if (PiChargeMatch_1B0[1] < 0)
+        hB0Mass_pionNotMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
       hMCKaonMatching_1B0[1]->Fill(KChargeMatch_1B0[1]) ;
+      if (KChargeMatch_1B0[1] < 0)
+        hB0Mass_kaonNotMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
+
       if ( (DeltaR_1B0[1] < minDeltaRB0) && (DeltaPt_1B0[1] < minDeltaPtB0) ) {
 	hMCTruthMatching_1B0[1][0]->Fill(1) ;
 	hB0Mass_1B0matched[1][0]->Fill( B0Mass_2B0[1][0] ) ;
@@ -4530,6 +4543,7 @@ void psiPrimePiK_MC::SlaveTerminate()
       nB0ACInMC_h->Write() ;
       hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ;
       hMCPionMatching_1B0[0]->Write() ; hMCKaonMatching_1B0[0]->Write() ;
+      hB0Mass_pionNotMatched_1B0[0]->Write() ; hB0Mass_kaonNotMatched_1B0[0]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[0][i]->Write() ;
 	if ( i < 2 )
@@ -4583,6 +4597,7 @@ void psiPrimePiK_MC::SlaveTerminate()
       hMCDeltaRPi_2B0->Write() ; hMCDeltaRK_2B0->Write() ;
       nTwins_h[1]->Write() ;
       hMCPionMatching_1B0[1]->Write() ; hMCKaonMatching_1B0[1]->Write() ;
+      hB0Mass_pionNotMatched_1B0[1]->Write() ; hB0Mass_kaonNotMatched_1B0[1]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[1][i]->Write() ;
 	if ( i < 2 )
@@ -4822,6 +4837,7 @@ void psiPrimePiK_MC::SlaveTerminate()
       hB0CTau_1B0->Write() ; hB0CTau_1B0matched->Write() ;
       hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ; 
       hMCPionMatching_1B0[0]->Write() ; hMCKaonMatching_1B0[0]->Write() ;
+      hB0Mass_pionNotMatched_1B0[0]->Write() ; hB0Mass_kaonNotMatched_1B0[0]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[0][i]->Write() ;
 	if ( i < 2 )
@@ -4885,6 +4901,7 @@ void psiPrimePiK_MC::SlaveTerminate()
       }
       nTwins_h[1]->Write() ;
       hMCPionMatching_1B0[1]->Write() ; hMCKaonMatching_1B0[1]->Write() ;
+      hB0Mass_pionNotMatched_1B0[1]->Write() ; hB0Mass_kaonNotMatched_1B0[1]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[1][i]->Write() ;
 	if ( i < 2 )
@@ -5144,9 +5161,10 @@ void psiPrimePiK_MC::Terminate()
 	    Bool_t twoGauss = kFALSE;
 	    //if ( option.Contains("MC")  &&  nEntries.getVal() > 20000  &&  nEntries.getVal() < 50000)
 	    twoGauss = kTRUE;
+            nGauss = "two Gaussisans" if twoGauss else "one Gaussian";
 
 	    Double_t fitMax = xMax, fitMin = xMin ;
-	    
+	    cout <<"Fitting with " <<nGauss <<" from " <<fitMin <<" to " <<fitMax <<endl; 
 	    RooRealVar mean("m", "mean", 3.1, 3.05, 3.15) ;
 	    Float_t sigmaMax = 0.05; // 0.03 goes at limit because fits the bkg
 	    RooRealVar sigma1("#sigma_{1}", "sigma1", sigmaMax/10, sigmaMax/100, sigmaMax);

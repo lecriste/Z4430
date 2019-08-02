@@ -599,6 +599,7 @@ public :
    TH1F* dz_pri_priB0CosAlpha[2][2], *dz_pri_priB0Less[2], *dz_pri_priB0LessB0CosAlpha[2][2], *dz_priB0CosAlpha_priB0LessB0CosAlpha[2][2], *dz_priB0Less_priB0LessB0CosAlpha[2][2] ;
    TH1F* hMCDeltaR_1B0, *hMCDeltaPt_1B0 ;
    TH1I* hMCPionMatching_1B0[2], *hMCKaonMatching_1B0[2];
+   TH1F* hB0Mass_pionNotMatched_1B0[2], *hB0Mass_kaonNotMatched_1B0[2];
    TH1I* hMCTruthMatching_1B0[2][3], *hMCTruthMatching_2B0notTwin[3], *hMCTruthMatching_2B0twin[3], *hMCTruthMatching_2B0signalWin_notTwin ; 
    TH1F* hB0Mass_2B0notTwin, *hB0Mass_2B0notTwin_matched[3], *hB0Mass_2B0twin, *hB0Mass_2B0twin_matched[3] ;
    TH2F* hDeltaB0Mass_2B0twin[2], *hAlpha_2B0twin[2] ;
