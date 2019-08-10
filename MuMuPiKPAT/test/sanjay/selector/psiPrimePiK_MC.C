@@ -1068,12 +1068,12 @@ void psiPrimePiK_MC::SlaveBegin(TTree * /*tree*/)
   psi2SPiMassSq_vs_KPiMassSq_B0constr_1B0[1] = new TH2F("psi2SPi_vs_KPi_Dalitz_B0constr_1B0_signalWin",""+mumu_label+"#pi^{-} vs K^{+}#pi^{-} of single B^{0} candidates in signal with B^{0} mass constraint;m^{2}(K^{+}#pi^{-}) [GeV^{2}];m^{2}("+mumu_label+"#pi^{-}) [GeV^{2}]", KPiMass2_fixBins,&(KPiMass2_binLimits.front()), MuMuPiMass2_varBins,&(MuMuPiMass2_binLimits.front())) ;
   psi2SPiMass_vs_KPiMass_1B0[1] = new TH2F("psi2SPi_vs_KPi_1B0_signalWin",""+mumu_label+"#pi^{-} vs K^{+}#pi^{-} of single B^{0} candidates in signal;m(K^{+}#pi^{-}) [GeV];m("+mumu_label+"#pi^{-}) [GeV]", KPiMass_varBins,&(KPiMass_binLimits.front()), MuMuPiMass_varBins,&(MuMuPiMass_binLimits.front())) ;
   psi2SPiMass_vs_KPiMass_B0constr_1B0[1] = new TH2F("psi2SPi_vs_KPi_B0constr_1B0_signalWin",""+mumu_label+"#pi^{-} vs K^{+}#pi^{-} of single B^{0} candidates in signal with B^{0} mass constraint;m(K^{+}#pi^{-}) [GeV];m("+mumu_label+"#pi^{-}) [GeV]", KPiMass_varBins,&(KPiMass_binLimits.front()), MuMuPiMass_varBins,&(MuMuPiMass_binLimits.front())) ;
-  hMCDeltaR_1B0 = new TH1F("MCDeltaR_1B0", "#DeltaR for single B^{0} candidate events;#DeltaR(B^{0}_{gen},B^{0}_{reco})", 200, 0, 0.2) ;
-  hMCDeltaPt_1B0 = new TH1F("MCDeltaPt_1B0", "#Deltap_{T}/p_{T} for single B^{0} candidate events;|p_{T}(B^{0}_{gen}) - p_{T}(B^{0}_{reco})| / p_{T}(B^{0}_{gen})", 100, 0, 1) ;
   hMCPionMatching_1B0[0] = new TH1I("MCPionTruthMatching_1B0", "MC pion charge matching for single signal B^{0} candidate events;Pion matched;Events", 5, -2.5, 2.5) ;
   hMCKaonMatching_1B0[0] = new TH1I("MCKaonTruthMatching_1B0", "MC kaon charge matching for single signal B^{0} candidate events;Kaon matched;Events", 5, -2.5, 2.5) ;
-  hB0Mass_pionNotMatched_1B0[0] = new TH1F("B0Mass_pionNotMatched_1B0", "mass of single B^{0} candidates with mis-id pion;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
-  hB0Mass_kaonNotMatched_1B0[0] = new TH1F("B0Mass_kaonNotMatched_1B0", "mass of single B^{0} candidates with mis-id kaon;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_pionMatched_1B0[0] = new TH1F("B0Mass_pionMatched_1B0", "mass of single B^{0} candidates with matched pion charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_pionNotMatched_1B0[0] = new TH1F("B0Mass_pionNotMatched_1B0", "mass of single B^{0} candidates with mismatched pion charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_kaonMatched_1B0[0] = new TH1F("B0Mass_kaonMatched_1B0", "mass of single B^{0} candidates with matched kaon charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_kaonNotMatched_1B0[0] = new TH1F("B0Mass_kaonNotMatched_1B0", "mass of single B^{0} candidates with mismatched kaon charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   hMCTruthMatching_1B0[0][0] = new TH1I("MCTruthMatching_1B0", "MC matching for single B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[0][1] = new TH1I("MCTruthMatching_1B0_dauCh", "MC matching (with daughters charge) for single B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[0][2] = new TH1I("MCTruthMatching_1B0fromDau", "MC truth daughters matching for single B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
@@ -1134,10 +1134,18 @@ void psiPrimePiK_MC::SlaveBegin(TTree * /*tree*/)
   hB0Mass_2B0twin_hourglass[1][0] = new TH1F("B0Mass_inside_notMatchedTwin", "mass of not matched B^{0} twin inside;m(not matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   hB0Mass_2B0twin_hourglass[1][1] = new TH1F("B0Mass_inside_matchedTwin", "mass of matched B^{0} twin inside;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   //
+  hDeltaB0Mass = new TH1F("deltaB0Mass_1B0", "#Deltam of single B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG}) [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barMass = new TH1F("deltaB0barMass_1B0", "#Deltam of single B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG) [GeV]", 250, 0., 0.5) ;
+  hDeltaB0realMass = new TH1F("deltaB0realMass_1B0", "#Deltam of single actual B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG) [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barRealMass = new TH1F("deltaB0barRealMass_1B0", "#Deltam of single actual B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG) [GeV]", 250, 0., 0.5) ;
+  hMCDeltaR_1B0 = new TH1F("MCDeltaR_1B0", "#DeltaR for single B^{0} candidate events;#DeltaR(B^{0}_{gen},B^{0}_{reco})", 200, 0, 0.2) ;
+  hMCDeltaPt_1B0 = new TH1F("MCDeltaPt_1B0", "#Deltap_{T}/p_{T} for single B^{0} candidate events;|p_{T}(B^{0}_{gen}) - p_{T}(B^{0}_{reco})| / p_{T}(B^{0}_{gen})", 100, 0, 1) ;
   hMCPionMatching_1B0[1] = new TH1I("MCPionTruthMatching_1B0signalWin", "MC pion charge matching for single signal B^{0} candidate events;Pion matched;Events", 5, -2.5, 2.5) ;
   hMCKaonMatching_1B0[1] = new TH1I("MCKaonTruthMatching_1B0signalWin", "MC kaon charge matching for single signal B^{0} candidate events;Kaon matched;Events", 5, -2.5, 2.5) ;
-  hB0Mass_pionNotMatched_1B0[1] = new TH1F("B0Mass_pionNotMatched_1B0signalWin", "mass of single B^{0} candidates with mis-id pion;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
-  hB0Mass_kaonNotMatched_1B0[1] = new TH1F("B0Mass_kaonNotMatched_1B0signalWin", "mass of single B^{0} candidates with mis-id kaon;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_pionMatched_1B0[1] = new TH1F("B0Mass_pionMatched_1B0signalWin", "mass of single B^{0} candidates with matched pion charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_pionNotMatched_1B0[1] = new TH1F("B0Mass_pionNotMatched_1B0signalWin", "mass of single B^{0} candidates with mismatched pion charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_kaonMatched_1B0[1] = new TH1F("B0Mass_kaonMatched_1B0signalWin", "mass of single B^{0} candidates with matched kaon charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
+  hB0Mass_kaonNotMatched_1B0[1] = new TH1F("B0Mass_kaonNotMatched_1B0signalWin", "mass of single B^{0} candidates with mismatched kaon charge;m(B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   hMCTruthMatching_1B0[1][0] = new TH1I("MCTruthMatching_1B0signalWin", "MC matching for single signal B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[1][1] = new TH1I("MCTruthMatching_1B0signalWin_dauCh", "MC matching (with daughters charge) for single signal B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
   hMCTruthMatching_1B0[1][2] = new TH1I("MCTruthMatching_1B0signalWin_fromDau", "MC truth daughters matching for single signal B^{0} candidate events;n(B^{0} matched);Events", 4, -1.5, 2.5) ;
@@ -2030,7 +2038,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
   Float_t B0Mass_1B0_hardCuts = -1;
   Float_t dPhi_muP_trkM = 999; Float_t dEta_muP_trkM = 999;
   // twin variables
-  Float_t DeltaR_2B0[2][2] = {{99,99},{99,99}}, DeltaPt_2B0[2][2] = {{99,99},{99,99}}, B0VtxCL_2B0[2] = {-1,-1}, B0Mass_2B0[2][2] = { {-1,-1},{-1,-1} }, B0CTau_2B0[2][2] = { {-1,-1},{-1,-1} }, alpha_2B0[2] = {-2,-2} ;
+  Float_t DeltaR_2B0[2][2] = {{99,99},{99,99}}, DeltaPt_2B0[2][2] = {{99,99},{99,99}}, B0VtxCL_2B0[2] = {-1,-1}, B0Mass_2B0[2][2] = { {-1,-1},{-1,-1} }, B0Mass_2B0_ex[2][2] = { {-1,-1},{-1,-1} }, B0CTau_2B0[2][2] = { {-1,-1},{-1,-1} }, alpha_2B0[2] = {-2,-2} ;
   Double_t DrPi_2B0[2] = {99,99}, DrK_2B0[2] = {99,99} ;
   Int_t PiChargeMatch_2B0[2][2] = { {0,0},{0,0} }, KChargeMatch_2B0[2][2] = { {0,0},{0,0} } ;
   Float_t B0Mass_gen = 0 ;
@@ -3028,6 +3036,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 		       
  
 		    B0Mass_2B0[0][nB0AC-1] = myB0MassAlt ;
+                    B0Mass_2B0_ex[0][nB0AC-1] = myB0MassAlt_ex ;
 		    // Nairit's optimized cuts 23/02/2015
 		    if ( 1
 			 && (*B0Vtx_CL)[myB0Idx] > 0.09 // stronger than baselineB0Sel
@@ -3105,6 +3114,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 		  }
 		  else if ( nB0AC == 2 ) {
 		    B0Mass_2B0[0][nB0AC-1] = myB0MassAlt ;
+                    B0Mass_2B0_ex[0][nB0AC-1] = myB0MassAlt_ex ;
 		    PsiPp4_2B0[0][nB0AC-1] = PsiPp4_orig; Pip4_2B0[0][nB0AC-1] = Pip4_orig; Kp4_2B0[0][nB0AC-1] = Kp4_orig ;
 		    PsiPp4_B0constr_2B0[0][nB0AC-1] = PsiPp4; Pip4_B0constr_2B0[0][nB0AC-1] = Pip4; Kp4_B0constr_2B0[0][nB0AC-1] = Kp4 ;
 		    PiCharge_2B0[0][nB0AC-1] = (*trackCharge)[pi_orig_Index] ; KCharge_2B0[0][nB0AC-1] = (*trackCharge)[ka_orig_Index] ;
@@ -3163,6 +3173,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 		  if ( (!MC && (nB0AC_signalWin == 1)) || nB0ACInMC == 1 ) {
 
 		    B0Mass_2B0[1][nB0ACInMC-1] = myB0MassAlt ;
+                    B0Mass_2B0_ex[1][nB0ACInMC-1] = myB0MassAlt_ex ;
 		    B0VtxCL_2B0[0] = (*B0Vtx_CL)[myB0Idx] ;
 		    B0CTau_2B0[1][0] = (*B0CTauPV)[myB0Idx]/(*B0CTauPVE)[myB0Idx] ;
 		    alpha_2B0[0] = alpha_orig;
@@ -3209,6 +3220,7 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
 		  } // if ( (!MC && (nB0AC_signalWin == 1)) || nB0ACInMC == 1 )
 		  else if ( (!MC && (nB0AC_signalWin == 2)) || nB0ACInMC == 2 ) {
 		    B0Mass_2B0[1][nB0ACInMC-1] = myB0MassAlt ;
+                    B0Mass_2B0_ex[1][nB0ACInMC-1] = myB0MassAlt_ex ;
 		    B0VtxCL_2B0[1] = (*B0Vtx_CL)[myB0Idx] ;
 		    B0CTau_2B0[1][1] = (*B0CTauPV)[myB0Idx]/(*B0CTauPVE)[myB0Idx] ;
 		    alpha_2B0[1] = alpha_orig;
@@ -3979,9 +3991,14 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
       hMCPionMatching_1B0[0]->Fill(PiChargeMatch_1B0[0]) ;
       if (PiChargeMatch_1B0[0] < 0)
         hB0Mass_pionNotMatched_1B0[0]->Fill(B0Mass_2B0[0][0]);
+      else
+        hB0Mass_pionMatched_1B0[0]->Fill(B0Mass_2B0[0][0]);
+      // this should be redundant
       hMCKaonMatching_1B0[0]->Fill(KChargeMatch_1B0[0]) ;
       if (KChargeMatch_1B0[0] < 0)
         hB0Mass_kaonNotMatched_1B0[0]->Fill(B0Mass_2B0[0][0]);
+      else
+        hB0Mass_kaonMatched_1B0[0]->Fill(B0Mass_2B0[0][0]);
 
       if ( (DeltaR_1B0[0] < minDeltaRB0) && (DeltaPt_1B0[0] < minDeltaPtB0) ) {
 	hB0Mass_1B0matched[0][0]->Fill( B0Mass_2B0[0][0] ) ;
@@ -4258,15 +4275,36 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
       psi2SPiMass_vs_KPiMass_B0constr_1B0[1]->Fill( (Kp4_B0constr_2B0[1][0] + Pip4_B0constr_2B0[1][0]).M(), (PsiPp4_B0constr_2B0[1][0] + Pip4_B0constr_2B0[1][0]).M() ) ;
     }
     if ( nB0ACInMC == 1 ) { // nB0ACInMC > 0 only if (MC && nB0AC_signalWin>0)
+
+      // Compute B0 and B0bar distributions
+      //B0beauty = KCharge_2B0[1][0] > 0 ? +1 : -1 ;
+      Double_t deltaB0mass = -1, deltaB0barmass = -1;
+      if (KCharge_2B0[1][0] > 0) {
+        deltaB0mass = fabs(B0Mass_2B0[1][0] - B0_mass) ;
+        deltaB0barmass = fabs(B0Mass_2B0_ex[1][0] - B0_mass) ;
+        hDeltaB0realMass->Fill( deltaB0mass ) ;
+      } else if (KCharge_2B0[1][0] < 0) {
+        deltaB0mass = fabs(B0Mass_2B0_ex[1][0] - B0_mass) ;
+        deltaB0barmass = fabs(B0Mass_2B0[1][0] - B0_mass) ;
+        hDeltaB0barRealMass->Fill( deltaB0barmass ) ;
+      }
+      hDeltaB0Mass->Fill( deltaB0mass ) ;
+      hDeltaB0barMass->Fill( deltaB0barmass ) ;
+
       hMCDeltaR_1B0->Fill( DeltaR_1B0[1] ) ;
       hMCDeltaPt_1B0->Fill( DeltaPt_1B0[1] ) ;
 
       hMCPionMatching_1B0[1]->Fill(PiChargeMatch_1B0[1]) ;
       if (PiChargeMatch_1B0[1] < 0)
         hB0Mass_pionNotMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
+      else
+        hB0Mass_pionMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
+      // this should be redundant
       hMCKaonMatching_1B0[1]->Fill(KChargeMatch_1B0[1]) ;
       if (KChargeMatch_1B0[1] < 0)
         hB0Mass_kaonNotMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
+      else
+        hB0Mass_kaonMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
 
       if ( (DeltaR_1B0[1] < minDeltaRB0) && (DeltaPt_1B0[1] < minDeltaPtB0) ) {
 	hMCTruthMatching_1B0[1][0]->Fill(1) ;
@@ -4541,8 +4579,8 @@ void psiPrimePiK_MC::SlaveTerminate()
       hMCDeltaRK_fromTwins->Write() ; hMCPtRecoVsPtTrueK_fromTwins->Write() ; hMCDeltaPtK_fromTwins->Write() ; hMCDeltaPtK_fromTwinsPiMatched->Write() ; hMCpTTrueK_fromTwins->Write() ;
       kaonDr_vs_pionDr_matched->Write() ; kaonP_vs_pionP_matched->Write() ; kaonPt_vs_pionPt_matched->Write() ;
       nB0ACInMC_h->Write() ;
-      hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ;
       hMCPionMatching_1B0[0]->Write() ; hMCKaonMatching_1B0[0]->Write() ;
+      hB0Mass_pionMatched_1B0[0]->Write() ; hB0Mass_kaonMatched_1B0[0]->Write() ;
       hB0Mass_pionNotMatched_1B0[0]->Write() ; hB0Mass_kaonNotMatched_1B0[0]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[0][i]->Write() ;
@@ -4596,7 +4634,10 @@ void psiPrimePiK_MC::SlaveTerminate()
       hDeltaB0Mass_2B0twin[1]->Write() ; hAlpha_2B0twin[1]->Write() ;
       hMCDeltaRPi_2B0->Write() ; hMCDeltaRK_2B0->Write() ;
       nTwins_h[1]->Write() ;
+      hDeltaB0Mass->Write() ; hDeltaB0barMass->Write() ; hDeltaB0realMass->Write() ; hDeltaB0barRealMass->Write() ;
+      hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ;
       hMCPionMatching_1B0[1]->Write() ; hMCKaonMatching_1B0[1]->Write() ;
+      hB0Mass_pionMatched_1B0[1]->Write() ; hB0Mass_kaonMatched_1B0[1]->Write() ;
       hB0Mass_pionNotMatched_1B0[1]->Write() ; hB0Mass_kaonNotMatched_1B0[1]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[1][i]->Write() ;
@@ -4835,8 +4876,8 @@ void psiPrimePiK_MC::SlaveTerminate()
       cosKstar_vs_cosPsi2S_helicityAngles->Write() ;
       planesAngle->Write() ; planesAngle_vs_cos_psi2S_helicityAngle->Write() ;
       hB0CTau_1B0->Write() ; hB0CTau_1B0matched->Write() ;
-      hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ; 
       hMCPionMatching_1B0[0]->Write() ; hMCKaonMatching_1B0[0]->Write() ;
+      hB0Mass_pionMatched_1B0[0]->Write() ; hB0Mass_kaonMatched_1B0[0]->Write() ;
       hB0Mass_pionNotMatched_1B0[0]->Write() ; hB0Mass_kaonNotMatched_1B0[0]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[0][i]->Write() ;
@@ -4900,7 +4941,10 @@ void psiPrimePiK_MC::SlaveTerminate()
 	hB0Mass_2B0twin_matched[i]->Write() ;
       }
       nTwins_h[1]->Write() ;
+      hDeltaB0Mass->Write() ; hDeltaB0barMass->Write() ; hDeltaB0realMass->Write() ; hDeltaB0barRealMass->Write() ;
+      hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ;
       hMCPionMatching_1B0[1]->Write() ; hMCKaonMatching_1B0[1]->Write() ;
+      hB0Mass_pionMatched_1B0[1]->Write() ; hB0Mass_kaonMatched_1B0[1]->Write() ;
       hB0Mass_pionNotMatched_1B0[1]->Write() ; hB0Mass_kaonNotMatched_1B0[1]->Write() ;
       for (Int_t i=0; i<3; i++) {
 	hMCTruthMatching_1B0[1][i]->Write() ;
@@ -5155,13 +5199,14 @@ void psiPrimePiK_MC::Terminate()
   
 	    RooRealVar xVar("xVar", myMuMuMass_MuID->GetXaxis()->GetTitle(), xMin, xMax) ;
             cout <<"\nSetting " <<myMuMuMass_MuID->GetXaxis()->GetTitle() <<" var bins to " <<nBins <<endl;
+            xVar.Print() ;
             xVar.setBins(nBins) ;
 	    RooDataHist *RooMuMuMass_ID = new RooDataHist(myMuMuMass_MuID->GetName(), myMuMuMass_MuID->GetTitle(), RooArgSet(xVar), Import(*myMuMuMass_MuID, kFALSE)) ;
 	    RooConstVar nEntries("Entries", "Total number of entries", myMuMuMass_MuID->Integral()) ;
 	    Bool_t twoGauss = kFALSE;
 	    //if ( option.Contains("MC")  &&  nEntries.getVal() > 20000  &&  nEntries.getVal() < 50000)
 	    twoGauss = kTRUE;
-            nGauss = "two Gaussisans" if twoGauss else "one Gaussian";
+            TString nGauss = twoGauss ? "two Gaussisans" : "one Gaussian";
 
 	    Double_t fitMax = xMax, fitMin = xMin ;
 	    cout <<"Fitting with " <<nGauss <<" from " <<fitMin <<" to " <<fitMax <<endl; 
