@@ -1135,9 +1135,9 @@ void psiPrimePiK_MC::SlaveBegin(TTree * /*tree*/)
   hB0Mass_2B0twin_hourglass[1][1] = new TH1F("B0Mass_inside_matchedTwin", "mass of matched B^{0} twin inside;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   //
   hDeltaB0Mass = new TH1F("deltaB0Mass_1B0", "#Deltam of single B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG}) [GeV]", 250, 0., 0.5) ;
-  hDeltaB0barMass = new TH1F("deltaB0barMass_1B0", "#Deltam of single B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG) [GeV]", 250, 0., 0.5) ;
-  hDeltaB0realMass = new TH1F("deltaB0realMass_1B0", "#Deltam of single actual B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG) [GeV]", 250, 0., 0.5) ;
-  hDeltaB0barRealMass = new TH1F("deltaB0barRealMass_1B0", "#Deltam of single actual B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG) [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barMass = new TH1F("deltaB0barMass_1B0", "#Deltam of single B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0realMass = new TH1F("deltaB0realMass_1B0", "#Deltam of single actual B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barRealMass = new TH1F("deltaB0barRealMass_1B0", "#Deltam of single actual B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
   hMCDeltaR_1B0 = new TH1F("MCDeltaR_1B0", "#DeltaR for single B^{0} candidate events;#DeltaR(B^{0}_{gen},B^{0}_{reco})", 200, 0, 0.2) ;
   hMCDeltaPt_1B0 = new TH1F("MCDeltaPt_1B0", "#Deltap_{T}/p_{T} for single B^{0} candidate events;|p_{T}(B^{0}_{gen}) - p_{T}(B^{0}_{reco})| / p_{T}(B^{0}_{gen})", 100, 0, 1) ;
   hMCPionMatching_1B0[1] = new TH1I("MCPionTruthMatching_1B0signalWin", "MC pion charge matching for single signal B^{0} candidate events;Pion matched;Events", 5, -2.5, 2.5) ;
