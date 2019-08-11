@@ -1134,10 +1134,12 @@ void psiPrimePiK_MC::SlaveBegin(TTree * /*tree*/)
   hB0Mass_2B0twin_hourglass[1][0] = new TH1F("B0Mass_inside_notMatchedTwin", "mass of not matched B^{0} twin inside;m(not matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   hB0Mass_2B0twin_hourglass[1][1] = new TH1F("B0Mass_inside_matchedTwin", "mass of matched B^{0} twin inside;m(matched B^{0}_{reco}) [GeV]", MuMuKPiMass_bins, MuMuKPiMass_low, MuMuKPiMass_high) ;
   //
-  hDeltaB0Mass = new TH1F("deltaB0Mass_1B0", "#Deltam of single B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG}) [GeV]", 250, 0., 0.5) ;
-  hDeltaB0barMass = new TH1F("deltaB0barMass_1B0", "#Deltam of single B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
-  hDeltaB0realMass = new TH1F("deltaB0realMass_1B0", "#Deltam of single actual B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
-  hDeltaB0barRealMass = new TH1F("deltaB0barRealMass_1B0", "#Deltam of single actual B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0Mass = new TH1F("deltaB0_mass1B0", "#Deltam of single B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG}) [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barMass = new TH1F("deltaB0bar_mass1B0", "#Deltam of single B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0realMass = new TH1F("deltaB0_realMass1B0", "#Deltam of single actual B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barRealMass = new TH1F("deltaB0bar_realMass1B0", "#Deltam of single actual B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0realMatchedMass = new TH1F("deltaB0_realMatchedMass1B0", "#Deltam of single actual matched B^{0} candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
+  hDeltaB0barRealMatchedMass = new TH1F("deltaB0bar_realMatchedMass1B0", "#Deltam of single actual matched B^{0}bar candidates;#Deltam(B^{0}_{reco} - B^{0}_{PDG} [GeV]", 250, 0., 0.5) ;
   hMCDeltaR_1B0 = new TH1F("MCDeltaR_1B0", "#DeltaR for single B^{0} candidate events;#DeltaR(B^{0}_{gen},B^{0}_{reco})", 200, 0, 0.2) ;
   hMCDeltaPt_1B0 = new TH1F("MCDeltaPt_1B0", "#Deltap_{T}/p_{T} for single B^{0} candidate events;|p_{T}(B^{0}_{gen}) - p_{T}(B^{0}_{reco})| / p_{T}(B^{0}_{gen})", 100, 0, 1) ;
   hMCPionMatching_1B0[1] = new TH1I("MCPionTruthMatching_1B0signalWin", "MC pion charge matching for single signal B^{0} candidate events;Pion matched;Events", 5, -2.5, 2.5) ;
@@ -4291,20 +4293,25 @@ Bool_t psiPrimePiK_MC::Process(Long64_t entry)
       hDeltaB0Mass->Fill( deltaB0mass ) ;
       hDeltaB0barMass->Fill( deltaB0barmass ) ;
 
-      hMCDeltaR_1B0->Fill( DeltaR_1B0[1] ) ;
-      hMCDeltaPt_1B0->Fill( DeltaPt_1B0[1] ) ;
-
       hMCPionMatching_1B0[1]->Fill(PiChargeMatch_1B0[1]) ;
       if (PiChargeMatch_1B0[1] < 0)
         hB0Mass_pionNotMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
-      else
+      else {
         hB0Mass_pionMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
+        if (KCharge_2B0[1][0] > 0)
+          hDeltaB0realMatchedMass->Fill( deltaB0mass ) ;
+        else
+          hDeltaB0barRealMatchedMass->Fill( deltaB0barmass ) ;
+      }
       // this should be redundant
       hMCKaonMatching_1B0[1]->Fill(KChargeMatch_1B0[1]) ;
       if (KChargeMatch_1B0[1] < 0)
         hB0Mass_kaonNotMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
       else
         hB0Mass_kaonMatched_1B0[1]->Fill(B0Mass_2B0[1][0]);
+
+      hMCDeltaR_1B0->Fill( DeltaR_1B0[1] ) ;
+      hMCDeltaPt_1B0->Fill( DeltaPt_1B0[1] ) ;
 
       if ( (DeltaR_1B0[1] < minDeltaRB0) && (DeltaPt_1B0[1] < minDeltaPtB0) ) {
 	hMCTruthMatching_1B0[1][0]->Fill(1) ;
@@ -4634,7 +4641,7 @@ void psiPrimePiK_MC::SlaveTerminate()
       hDeltaB0Mass_2B0twin[1]->Write() ; hAlpha_2B0twin[1]->Write() ;
       hMCDeltaRPi_2B0->Write() ; hMCDeltaRK_2B0->Write() ;
       nTwins_h[1]->Write() ;
-      hDeltaB0Mass->Write() ; hDeltaB0barMass->Write() ; hDeltaB0realMass->Write() ; hDeltaB0barRealMass->Write() ;
+      hDeltaB0Mass->Write() ; hDeltaB0barMass->Write() ; hDeltaB0realMass->Write() ; hDeltaB0barRealMass->Write() ; hDeltaB0realMatchedMass->Write() ; hDeltaB0barRealMatchedMass->Write() ;
       hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ;
       hMCPionMatching_1B0[1]->Write() ; hMCKaonMatching_1B0[1]->Write() ;
       hB0Mass_pionMatched_1B0[1]->Write() ; hB0Mass_kaonMatched_1B0[1]->Write() ;
@@ -4941,7 +4948,7 @@ void psiPrimePiK_MC::SlaveTerminate()
 	hB0Mass_2B0twin_matched[i]->Write() ;
       }
       nTwins_h[1]->Write() ;
-      hDeltaB0Mass->Write() ; hDeltaB0barMass->Write() ; hDeltaB0realMass->Write() ; hDeltaB0barRealMass->Write() ;
+      hDeltaB0Mass->Write() ; hDeltaB0barMass->Write() ; hDeltaB0realMass->Write() ; hDeltaB0barRealMass->Write() ; hDeltaB0realMatchedMass->Write() ; hDeltaB0barRealMatchedMass->Write() ;
       hMCDeltaR_1B0->Write() ; hMCDeltaPt_1B0->Write() ;
       hMCPionMatching_1B0[1]->Write() ; hMCKaonMatching_1B0[1]->Write() ;
       hB0Mass_pionMatched_1B0[1]->Write() ; hB0Mass_kaonMatched_1B0[1]->Write() ;
@@ -5306,6 +5313,23 @@ void psiPrimePiK_MC::Terminate()
 	//
       
 	// signal win
+        TString flavor[] = {"","bar"};
+        for (Int_t i=0; i<2; ++i)
+          if ( (hDeltaB0Mass = (TH1F*) AlexisOut->Get(TString::Format("deltaB0%s_mass1B0", flavor[i].Data()))) ) {
+            hDeltaB0Mass->SetLineColor(kBlack) ;
+            hDeltaB0Mass->Draw() ;
+            if ( (hDeltaB0realMass = (TH1F*) AlexisOut->Get(TString::Format("deltaB0%s_realMass1B0", flavor[i].Data()))) ) {
+              hDeltaB0realMass->SetLineColor(kRed) ;
+              hDeltaB0realMass->Draw("same") ;
+              if ( (hDeltaB0realMatchedMass = (TH1F*) AlexisOut->Get(TString::Format("deltaB0%s_realMatchedMass1B0", flavor[i].Data()))) ) {
+                hDeltaB0realMatchedMass->SetLineColor(kBlue) ;
+                hDeltaB0realMatchedMass->Draw("same") ;
+              }
+            }
+          //gPad->BuildLegend();
+          gPad->SaveAs( TString::Format("%s/B0%s_deltaM_1B0.png", dir.Data(), flavor[i].Data()) );
+          }
+
 	cout <<"\n\nMC matching in signal mass window:\n" <<endl ;
 	if ( (hMCTruthMatching_1B0[1][0] = (TH1I*) AlexisOut->Get("MCTruthMatching_1B0signalWin")) ) {
 	  cout <<"MC matching efficiency for only 1 B0 in signal = " <<( 1. - hMCTruthMatching_1B0[1][0]->GetBinContent(hMCTruthMatching_1B0[1][0]->GetXaxis()->FindBin(0.)) / hMCTruthMatching_1B0[1][0]->GetEntries() )*100 <<"%" <<endl ;

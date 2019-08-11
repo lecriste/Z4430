@@ -597,7 +597,7 @@ public :
    TH1F* priVtx_z[7] ;
    TH1F* priVtx_delta[2][3], *priVtx_deltaX_test, *priVtx_deltaY_test, *priVtx_B0_delta[2][3], *priVtx_B0CosAlpha_delta[2][2][3], *priVtxB0Less_delta[2][3], *priVtxB0Less_B0CosAlpha_delta[2][2][3] ;
    TH1F* dz_pri_priB0CosAlpha[2][2], *dz_pri_priB0Less[2], *dz_pri_priB0LessB0CosAlpha[2][2], *dz_priB0CosAlpha_priB0LessB0CosAlpha[2][2], *dz_priB0Less_priB0LessB0CosAlpha[2][2] ;
-   TH1F* hDeltaB0Mass, *hDeltaB0barMass, *hDeltaB0realMass, *hDeltaB0barRealMass ;
+   TH1F* hDeltaB0Mass, *hDeltaB0barMass, *hDeltaB0realMass, *hDeltaB0barRealMass, *hDeltaB0realMatchedMass, *hDeltaB0barRealMatchedMass ;
    TH1F* hMCDeltaR_1B0, *hMCDeltaPt_1B0 ;
    TH1I* hMCPionMatching_1B0[2], *hMCKaonMatching_1B0[2];
    TH1F* hB0Mass_pionMatched_1B0[2], *hB0Mass_kaonMatched_1B0[2];
