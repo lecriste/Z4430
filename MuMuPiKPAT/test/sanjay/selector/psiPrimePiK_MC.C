@@ -5206,8 +5206,7 @@ void psiPrimePiK_MC::Terminate()
   
 	    RooRealVar xVar("xVar", myMuMuMass_MuID->GetXaxis()->GetTitle(), xMin, xMax) ;
             cout <<"\nSetting " <<myMuMuMass_MuID->GetXaxis()->GetTitle() <<" var bins to " <<nBins <<endl;
-            xVar.Print() ;
-            xVar.setBins(nBins) ;
+            //xVar.setBins(nBins) ; // segmentation violation with ROOT 5.32
 	    RooDataHist *RooMuMuMass_ID = new RooDataHist(myMuMuMass_MuID->GetName(), myMuMuMass_MuID->GetTitle(), RooArgSet(xVar), Import(*myMuMuMass_MuID, kFALSE)) ;
 	    RooConstVar nEntries("Entries", "Total number of entries", myMuMuMass_MuID->Integral()) ;
 	    Bool_t twoGauss = kFALSE;
@@ -5327,7 +5326,10 @@ void psiPrimePiK_MC::Terminate()
               }
             }
           //gPad->BuildLegend();
+          gPad->SetLogy(0) ;
           gPad->SaveAs( TString::Format("%s/B0%s_deltaM_1B0.png", dir.Data(), flavor[i].Data()) );
+          gPad->SetLogy() ;
+          gPad->SaveAs( TString::Format("%s/B0%s_deltaM_1B0_logY.png", dir.Data(), flavor[i].Data()) );
           }
 
 	cout <<"\n\nMC matching in signal mass window:\n" <<endl ;
